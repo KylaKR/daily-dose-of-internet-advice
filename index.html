@@ -15,7 +15,7 @@
             align-items: center;
             min-height: 100vh;
         }
-        .advice-container {
+        .wisdom-container {
             background: white;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -29,7 +29,7 @@
             color: #2c3e50;
             font-weight: 300;
         }
-        .advice-text {
+        .wisdom-text {
             font-size: 1.5rem;
             margin: 30px 0;
             min-height: 120px;
@@ -89,7 +89,7 @@
             display: inline-block;
         }
         @media (max-width: 600px) {
-            .advice-text {
+            .wisdom-text {
                 font-size: 1.2rem;
             }
             .btn-container {
@@ -99,9 +99,9 @@
     </style>
 </head>
 <body>
-    <div class="advice-container">
+    <div class="wisdom-container">
         <h1>Daily Dose of Internet Advice</h1>
-        <div class="advice-text" id="advice">Loading fresh advice...</div>
+        <div class="wisdom-text" id="wisdom">Loading fresh advice...</div>
         <div class="category" id="category"></div>
         <div class="btn-container">
             <button class="action-btn" id="new-btn">New Advice</button>
@@ -114,6 +114,7 @@
                     <button onclick="shareTo('reddit')">Reddit</button>
                     <button onclick="shareTo('linkedin')">LinkedIn</button>
                     <button onclick="shareTo('whatsapp')">WhatsApp</button>
+                    <button onclick="shareTo('instagram')">Instagram</button>
                 </div>
             </div>
         </div>
@@ -121,23 +122,168 @@
     </div>
 
     <script>
-        // ===== ADVICE LIBRARY ===== //
-        const adviceBank = [
+        // ===== COMPLETE CONTENT LIBRARY (150 items) ===== //
+        const wisdomBank = [
+            // === MEMES (50) ===
             { text: "🚀 *Not financial advice* but... HODL!", category: "Crypto Memes" },
             { text: "TFW you realize: 'This is fine.' 🔥🐶", category: "Meme Philosophy" },
-            { text: "Reddit wisdom: 'The real LPT is always in the comments'", category: "Internet Gold" },
-            { text: "PSA: Your 401(k) isn't a mythical creature", category: "Finance Truths" },
-            { text: "TIL the '5-second rule' also applies to regrettable purchases", category: "Life Lessons" },
-            { text: "IRL Loading Screen Tip: Compound interest works while you sleep", category: "Gamer Finance" },
-            { text: "Relationship status: Committed to self-improvement", category: "Growth" },
-            { text: "System Update Available: [Install Adulting 2.0]", category: "Tech Truth" },
+            { text: "Me: *buys avocado toast*\nBank account: 'Ah shit, here we go again'", category: "Millennial Truths" },
+            { text: "Distracted Boyfriend:\n💼 Job\n❤️ Side Hustle", category: "Meme Wisdom" },
+            { text: "'How to adult' - My most Googled phrase", category: "Relatable" },
+            { text: "My willpower after 8PM:\n[10%] ████\n[90%] ████████████████", category: "Meme Data" },
+            { text: "They don't know I... *folded laundry and left it in the basket*", category: "Secret Wins" },
+            { text: "Me: I'll wake up early tomorrow\nAlso me: *hits snooze*", category: "Relatable" },
+            { text: "My motivation:\n[10% Goals]\n[90% Spite]", category: "Honest AF" },
+            { text: "Taxes are just RPG quests with worse rewards", category: "Gamer Truth" },
+            { text: "When the WiFi goes out:\nMe: *stares into existential void*", category: "Relatable Memes" },
+            { text: "My productivity:\n1% Actual work\n99% Moving mouse to prevent screensaver", category: "Office Truths" },
+            { text: "Instagram vs Reality:\n🌴 Vacation post\n💼 3 hours of editing", category: "Social Media" },
+            { text: "Error: Adulting module not found", category: "Millennial Truths" },
+            { text: "POV: You're 30 but feel 18 inside\nYour knees: *crack loudly*", category: "Aging Truths" },
+            { text: "When someone says 'money can't buy happiness'\nMe: *shows pet adoption papers*", category: "Meme Comebacks" },
+            { text: "My diet:\n🍎 Monday\n🍕 Tuesday-Sunday", category: "Food Fails" },
+            { text: "Bank account: $3.50\nMe: *buys $5 coffee*", category: "Financial Fails" },
+            { text: "My brain at 3AM:\n*Random childhood memory*\nMe: WHY DID I SAY THAT IN 2007", category: "Anxiety Hours" },
+            { text: "Me: *saves meme*\nAlso me: Never looks at it again", category: "Digital Hoarding" },
+            { text: "When the 🍕 arrives but you're on a diet 😭", category: "Food Struggles" },
+            { text: "My sleep schedule is a cryptocurrency - wildly volatile", category: "Relatable" },
+            { text: "IRL Loading Screen Tip:\nCompound interest works while you sleep", category: "Gamer Finance" },
+            { text: "404: Fucks not found\n(About things that don't matter)", category: "Self-Care" },
+            { text: "Your brain:\nRAM 16GB\nStorage 1TB\nProcessing speed: 🐢", category: "Neurospicy" },
+            { text: "Life DLC:\n'Financial Literacy Pack' worth every penny", category: "Gamer Wisdom" },
+            { text: "Relationship status:\nCommitted to self-improvement", category: "Growth" },
+            { text: "System Update Available:\n[Install Wisdom 2.0]", category: "Tech Truth" },
             { text: "Ctrl+Alt+Del toxic relationships", category: "Tech Wisdom" },
-            { text: "404: Fucks not found (About things that don't matter)", category: "Self-Care" }
+            { text: "My resume:\n'Team player'\nMe: *hates everyone*", category: "Work Truths" },
+            { text: "My personality:\n30% Coffee\n70% Regret", category: "Morning Person" },
+            { text: "Me: I should exercise\nAlso me: *orders pizza*", category: "Health Goals" },
+            { text: "My savings plan:\nStep 1: ???\nStep 2: Profit", category: "Financial Planning" },
+            { text: "Adulting level:\nMicrowave without burning food", category: "Life Skills" },
+            { text: "My therapist:\n'How does that make you feel?'\nMe: *already crying*", category: "Therapy Memes" },
+            { text: "Me: *does one pushup*\nAlso me: 'I should be ripped by now'", category: "Fitness Fails" },
+            { text: "My phone battery:\n100% → 1% in 0.2 seconds", category: "Tech Problems" },
+            { text: "Me: *buys planner*\nAlso me: Never opens it", category: "Organization Fails" },
+            { text: "My cooking skills:\nStep 1: Burn water", category: "Kitchen Fails" },
+            { text: "Me: *saves money*\nMy online cart: 'Allow me to introduce myself'", category: "Shopping Fails" },
+            { text: "My productivity app:\n99% notifications\n1% actual work", category: "Tech Truths" },
+            { text: "Me: *goes to gym once*\nMy muscles: 'We don't know her'", category: "Fitness Truths" },
+            { text: "My diet starts:\nTomorrow\nAlways tomorrow", category: "Health Truths" },
+            { text: "Me: *checks bank account*\nMy happiness: *disappears*", category: "Financial Truths" },
+            { text: "My sleep schedule:\nYes", category: "Sleep Deprived" },
+            { text: "Me: *buys vegetables*\nAlso me: *lets them rot*", category: "Good Intentions" },
+            { text: "My skincare routine:\nTears", category: "Beauty Truths" },
+            { text: "Me: *says I'll be productive*\nMy bed: 'I don't think so'", category: "Productivity Fails" },
+            { text: "My willpower:\nExists only before noon", category: "Daily Struggles" },
+            { text: "Me: *makes to-do list*\nAlso me: *loses list*", category: "Organization Truths" },
+
+            // === REDDIT GOLD (50) ===
+            { text: "Reddit wisdom: 'The real LPT is always in the comments'", category: "Internet Gold" },
+            { text: "TIL the real pro tip is to hydrate while you procrastinate", category: "Reddit Wisdom" },
+            { text: "AITA for wanting to financially stabilize before having kids?", category: "Reddit Advice" },
+            { text: "ELI5: Why does money disappear faster when I get paid?", category: "Reddit Finance" },
+            { text: "TIFU by checking my credit score", category: "Reddit Stories" },
+            { text: "CMV: Avocado toast is a symptom, not the cause", category: "Reddit Debates" },
+            { text: "PSA: Your 401(k) isn't a mythical creature", category: "Reddit Finance" },
+            { text: "LPT: Buy the expensive version of things you use daily", category: "Life Pro Tips" },
+            { text: "ShowerThought: Adulthood is just pretending you know WTF you're doing", category: "Reddit Wisdom" },
+            { text: "TIL the '5-second rule' also applies to regrettable purchases", category: "Reddit Truths" },
+            { text: "AITA for investing in meme stocks instead of my nephew's college fund?", category: "Reddit Drama" },
+            { text: "LPT: The best time to start was yesterday. The second best is right after reading this.", category: "Life Pro Tips" },
+            { text: "TIFU by explaining Bitcoin to my grandma at Thanksgiving", category: "Reddit Stories" },
+            { text: "CMV: 'Financial freedom' just means surviving capitalism", category: "Reddit Philosophy" },
+            { text: "PSA: Your credit score isn't a high score to beat", category: "Reddit Finance" },
+            { text: "ShowerThought: Money can't buy happiness, but it can buy tacos which is basically the same", category: "Reddit Wisdom" },
+            { text: "TIL the real adulting test is assembling IKEA furniture without crying", category: "Reddit Truths" },
+            { text: "LPT: If you wouldn't take advice from someone, don't take criticism from them either", category: "Life Pro Tips" },
+            { text: "AITA for pretending I don't know how to fix the printer?", category: "Workplace Truths" },
+            { text: "TIFU by Googling 'how to adult' at work", category: "Reddit Stories" },
+            { text: "CMV: 'Self-care' is just capitalism's way of selling us solutions to problems it created", category: "Reddit Philosophy" },
+            { text: "PSA: Your 20s are for making mistakes, your 30s are for paying for them", category: "Reddit Truths" },
+            { text: "ShowerThought: Credit scores are just popularity contests for banks", category: "Reddit Wisdom" },
+            { text: "TIL the real meaning of 'adulting' is googling how to do basic tasks", category: "Reddit Truths" },
+            { text: "LPT: The 'latte factor' is real, but so is the 'therapy factor'", category: "Life Pro Tips" },
+            { text: "AITA for wanting to retire at 40 instead of having kids?", category: "Reddit Debates" },
+            { text: "TIFU by explaining my side hustle to my 9-5 boss", category: "Work Fails" },
+            { text: "CMV: 'Hustle culture' is just exploitation with extra steps", category: "Reddit Philosophy" },
+            { text: "PSA: Your mental health is worth more than any paycheck", category: "Reddit Truths" },
+            { text: "ShowerThought: Money is just imaginary numbers we all agree to care about", category: "Reddit Wisdom" },
+            { text: "TIL the real wealth is not checking your portfolio daily", category: "Investing Truths" },
+            { text: "LPT: Buy nice or buy twice applies to mattresses and relationships", category: "Life Pro Tips" },
+            { text: "AITA for refusing to lend money to family?", category: "Reddit Drama" },
+            { text: "TIFU by thinking I could day trade", category: "Finance Fails" },
+            { text: "CMV: 'Passive income' is just making your money go to work so you don't have to", category: "Reddit Philosophy" },
+            { text: "PSA: Your worth isn't measured by your productivity", category: "Reddit Truths" },
+            { text: "ShowerThought: Adulthood is realizing your parents were winging it too", category: "Reddit Wisdom" },
+            { text: "TIL the real 'American Dream' is a 780 credit score", category: "Reddit Truths" },
+            { text: "LPT: The best investment is in yourself (but index funds are good too)", category: "Life Pro Tips" },
+            { text: "AITA for budgeting my wedding like a business merger?", category: "Reddit Drama" },
+            { text: "TIFU by explaining FIRE to my consumerist cousin", category: "Finance Fails" },
+            { text: "CMV: 'Early retirement' is just unemployment with extra steps", category: "Reddit Philosophy" },
+            { text: "PSA: Your 30s are for fixing what you broke in your 20s", category: "Reddit Truths" },
+            { text: "ShowerThought: Money is just stress you can count", category: "Reddit Wisdom" },
+            { text: "TIL the real test of adulthood is unsubscribing from emails", category: "Reddit Truths" },
+            { text: "LPT: Buy experiences, not things (except for good shoes)", category: "Life Pro Tips" },
+            { text: "AITA for refusing to split the bill evenly when I only had water?", category: "Reddit Drama" },
+            { text: "TIFU by thinking I could outsmart the stock market", category: "Investing Fails" },
+            { text: "CMV: 'Financial independence' is the new 'American Dream'", category: "Reddit Philosophy" },
+            { text: "PSA: Your 40s are for pretending you know what you're doing", category: "Reddit Truths" },
+
+            // === FUNNY BUT WISE (50) ===
+            { text: "The best workout? Running away from bad decisions", category: "Life Truths" },
+            { text: "Adulting level: Microwave without burning food", category: "Basic Skills" },
+            { text: "My credit score and I: It's complicated", category: "Financial Truths" },
+            { text: "Me: I'll wake up early tomorrow\nAlso me: *hits snooze*", category: "Morning Struggles" },
+            { text: "My motivation: 10% Goals, 90% Spite", category: "Honest Truths" },
+            { text: "Taxes are just RPG quests with worse rewards", category: "Gamer Truths" },
+            { text: "My sleep schedule is a cryptocurrency - volatile", category: "Sleep Truths" },
+            { text: "I don't ghost people... I just respawn later", category: "Social Truths" },
+            { text: "My willpower after 8PM: Error 404", category: "Evening Truths" },
+            { text: "My productivity app: 99% notifications, 1% actual work", category: "Tech Truths" },
+            { text: "Therapy: $150\nJournaling: $15\nRealizing you're the problem: Priceless", category: "Mental Health" },
+            { text: "My diet: Cheat meals with occasional food", category: "Health Truths" },
+            { text: "Financial planning: Hope for the best, prepare for the worst", category: "Money Truths" },
+            { text: "My resume: 'Team player'\nReality: *hates everyone*", category: "Work Truths" },
+            { text: "My personality: 30% Coffee, 70% Regret", category: "Morning Truths" },
+            { text: "Me: I should exercise\nAlso me: *orders pizza*", category: "Fitness Truths" },
+            { text: "My savings plan: Step 1: ???, Step 2: Profit", category: "Financial Truths" },
+            { text: "Adulting level: Microwave without burning food", category: "Life Skills" },
+            { text: "My therapist: 'How does that make you feel?'\nMe: *already crying*", category: "Therapy Truths" },
+            { text: "Me: *does one pushup*\nAlso me: 'I should be ripped by now'", category: "Fitness Truths" },
+            { text: "My phone battery: 100% → 1% in 0.2 seconds", category: "Tech Truths" },
+            { text: "Me: *buys planner*\nAlso me: Never opens it", category: "Organization Truths" },
+            { text: "My cooking skills: Step 1: Burn water", category: "Kitchen Truths" },
+            { text: "Me: *saves money*\nMy online cart: 'Allow me to introduce myself'", category: "Shopping Truths" },
+            { text: "My productivity app: 99% notifications, 1% actual work", category: "Tech Truths" },
+            { text: "Me: *goes to gym once*\nMy muscles: 'We don't know her'", category: "Fitness Truths" },
+            { text: "My diet starts: Tomorrow, always tomorrow", category: "Health Truths" },
+            { text: "Me: *checks bank account*\nMy happiness: *disappears*", category: "Financial Truths" },
+            { text: "My sleep schedule: Yes", category: "Sleep Truths" },
+            { text: "Me: *buys vegetables*\nAlso me: *lets them rot*", category: "Good Intentions" },
+            { text: "My skincare routine: Tears", category: "Beauty Truths" },
+            { text: "Me: *says I'll be productive*\nMy bed: 'I don't think so'", category: "Productivity Truths" },
+            { text: "My willpower: Exists only before noon", category: "Daily Truths" },
+            { text: "Me: *makes to-do list*\nAlso me: *loses list*", category: "Organization Truths" },
+            { text: "My diet: Cheat days with occasional healthy meals", category: "Health Truths" },
+            { text: "My financial plan: Hope for inheritance", category: "Money Truths" },
+            { text: "My exercise routine: Walking to fridge", category: "Fitness Truths" },
+            { text: "My retirement plan: Win lottery", category: "Financial Truths" },
+            { text: "My cooking: If it's not delivery, it's Digiorno", category: "Kitchen Truths" },
+            { text: "My productivity: 10% Work, 90% Checking phone", category: "Work Truths" },
+            { text: "My savings: What savings?", category: "Financial Truths" },
+            { text: "My sleep: 5 hours on weekdays, 12 on weekends", category: "Sleep Truths" },
+            { text: "My diet: Mostly beige food", category: "Health Truths" },
+            { text: "My exercise: Running late", category: "Fitness Truths" },
+            { text: "My cooking: If it's not microwaved, it's not food", category: "Kitchen Truths" },
+            { text: "My productivity: Best under deadline pressure", category: "Work Truths" },
+            { text: "My savings: Invisible", category: "Financial Truths" },
+            { text: "My sleep: Never enough", category: "Sleep Truths" },
+            { text: "My diet: See food diet", category: "Health Truths" },
+            { text: "My exercise: Walking to car", category: "Fitness Truths" }
         ];
 
         // ===== SOCIAL SHARING ===== //
         function shareTo(platform) {
-            const text = `${adviceElement.textContent}\n\n${categoryElement.textContent}`;
+            const text = `${wisdomElement.textContent}\n\n${categoryElement.textContent}`;
             let url;
             
             switch(platform) {
@@ -156,13 +302,17 @@
                 case 'whatsapp':
                     url = `https://wa.me/?text=${encodeURIComponent(text)}`;
                     break;
+                case 'instagram':
+                    navigator.clipboard.writeText(text);
+                    alert("Copied to clipboard! Paste into Instagram Stories");
+                    return;
             }
             
             window.open(url, '_blank', 'width=600,height=400');
         }
 
         // ===== APP FUNCTIONALITY ===== //
-        const adviceElement = document.getElementById('advice');
+        const wisdomElement = document.getElementById('wisdom');
         const categoryElement = document.getElementById('category');
         const newBtn = document.getElementById('new-btn');
         const copyBtn = document.getElementById('copy-btn');
@@ -183,36 +333,36 @@
             socialDropdown.style.display = 'none';
         });
 
-        function getNewAdvice() {
-            if (usedIndices.length >= adviceBank.length) {
+        function getNewWisdom() {
+            if (usedIndices.length >= wisdomBank.length) {
                 usedIndices = [];
                 counterElement.textContent = "✨ You've seen all advice! Starting fresh...";
             }
             
             let randomIndex;
             do {
-                randomIndex = Math.floor(Math.random() * adviceBank.length);
+                randomIndex = Math.floor(Math.random() * wisdomBank.length);
             } while (usedIndices.includes(randomIndex));
             
             usedIndices.push(randomIndex);
-            const item = adviceBank[randomIndex];
+            const item = wisdomBank[randomIndex];
             
-            adviceElement.innerHTML = item.text.replace(/\n/g, '<br>');
+            wisdomElement.innerHTML = item.text.replace(/\n/g, '<br>');
             categoryElement.textContent = `Category: ${item.category}`;
-            counterElement.textContent = `Showing ${usedIndices.length}/${adviceBank.length}`;
+            counterElement.textContent = `Showing ${usedIndices.length}/${wisdomBank.length}`;
             
-            adviceElement.style.opacity = 0;
+            wisdomElement.style.opacity = 0;
             setTimeout(() => {
-                adviceElement.style.transition = 'opacity 0.5s ease';
-                adviceElement.style.opacity = 1;
+                wisdomElement.style.transition = 'opacity 0.5s ease';
+                wisdomElement.style.opacity = 1;
             }, 10);
         }
 
         // Button actions
-        newBtn.addEventListener('click', getNewAdvice);
+        newBtn.addEventListener('click', getNewWisdom);
         
         copyBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(`${adviceElement.textContent}\n${categoryElement.textContent}`);
+            navigator.clipboard.writeText(`${wisdomElement.textContent}\n${categoryElement.textContent}`);
             copyBtn.textContent = "Copied!";
             setTimeout(() => copyBtn.textContent = "Copy", 2000);
         });
@@ -220,11 +370,11 @@
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space') {
                 e.preventDefault();
-                getNewAdvice();
+                getNewWisdom();
             }
         });
         
-        getNewAdvice();
+        getNewWisdom();
     </script>
 </body>
 </html>
