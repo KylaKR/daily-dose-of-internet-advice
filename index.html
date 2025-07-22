@@ -23,6 +23,7 @@
             max-width: 600px;
             padding: 30px;
             text-align: center;
+            position: relative;
         }
         h1 {
             margin-top: 0;
@@ -88,8 +89,6 @@
             position: relative;
             display: inline-block;
         }
-        
-        /* NEW STREAK MODAL STYLES */
         .streak-modal {
             display: none;
             position: fixed;
@@ -130,7 +129,6 @@
             border-radius: 20px;
             font-size: 0.8rem;
         }
-
         @media (max-width: 600px) {
             .wisdom-text {
                 font-size: 1.2rem;
@@ -158,14 +156,13 @@
                     <button onclick="shareTo('reddit')">Reddit</button>
                     <button onclick="shareTo('linkedin')">LinkedIn</button>
                     <button onclick="shareTo('whatsapp')">WhatsApp</button>
-                    <button onclick="shareTo('instagram')">Instagram</button>
                 </div>
             </div>
         </div>
         <div id="counter" style="margin-top: 15px; font-size: 0.8rem;"></div>
     </div>
 
-    <!-- NEW STREAK MODAL -->
+    <!-- Streak Reward Modal -->
     <div class="streak-modal" id="streakModal">
         <div class="streak-content">
             <h2>🎉 10-Day Streak Unlocked! 🎉</h2>
@@ -179,15 +176,209 @@
     </div>
 
     <script>
-        // ===== COMPLETE CONTENT LIBRARY (150 items) ===== //
+        // ===== COMPLETE CONTENT LIBRARY (200 items) ===== //
         const wisdomBank = [
-            // [Your existing 150 advice items remain exactly the same]
-            // ... (all your existing advice items) ...
+            // Mindset & Growth (20 items)
+            { text: "You are the average of the five people you spend the most time with.", category: "Mindset & Growth" },
+            { text: "The obstacle is the way.", category: "Mindset & Growth" },
+            { text: "Focus on progress, not perfection.", category: "Mindset & Growth" },
+            { text: "Your mindset determines your reality.", category: "Mindset & Growth" },
+            { text: "If you don't like something, change it. If you can't change it, change your attitude.", category: "Mindset & Growth" },
+            { text: "Comparison is the thief of joy.", category: "Mindset & Growth" },
+            { text: "The only limit to our realization of tomorrow is our doubts of today.", category: "Mindset & Growth" },
+            { text: "Be stubborn about your goals but flexible about your methods.", category: "Mindset & Growth" },
+            { text: "Discipline is choosing between what you want now and what you want most.", category: "Mindset & Growth" },
+            { text: "You miss 100% of the shots you don't take.", category: "Mindset & Growth" },
+            { text: "Silence is a source of great strength.", category: "Mindset & Growth" },
+            { text: "The best revenge is massive success.", category: "Mindset & Growth" },
+            { text: "Don't let yesterday take up too much of today.", category: "Mindset & Growth" },
+            { text: "Simplicity is the ultimate sophistication.", category: "Mindset & Growth" },
+            { text: "Be so good they can't ignore you.", category: "Mindset & Growth" },
+            { text: "If you want to go fast, go alone. If you want to go far, go together.", category: "Mindset & Growth" },
+            { text: "The only way to do great work is to love what you do.", category: "Mindset & Growth" },
+            { text: "Your vibe attracts your tribe.", category: "Mindset & Growth" },
+            { text: "Don't wait for the perfect moment—take the moment and make it perfect.", category: "Mindset & Growth" },
+            { text: "Success is stumbling from failure to failure with no loss of enthusiasm.", category: "Mindset & Growth" },
+
+            // Habits & Productivity (20 items)
+            { text: "Atomic habits compound into remarkable results.", category: "Habits & Productivity" },
+            { text: "Start before you're ready.", category: "Habits & Productivity" },
+            { text: "The two most powerful warriors are patience and time.", category: "Habits & Productivity" },
+            { text: "Do the hard things first.", category: "Habits & Productivity" },
+            { text: "Work expands to fill the time allotted.", category: "Habits & Productivity" },
+            { text: "Done is better than perfect.", category: "Habits & Productivity" },
+            { text: "Track your habits—what gets measured gets managed.", category: "Habits & Productivity" },
+            { text: "Automate or delegate what you can.", category: "Habits & Productivity" },
+            { text: "Batch similar tasks together.", category: "Habits & Productivity" },
+            { text: "Take breaks—your brain needs rest to perform.", category: "Habits & Productivity" },
+            { text: "The secret of getting ahead is getting started.", category: "Habits & Productivity" },
+            { text: "The harder I work, the luckier I get.", category: "Habits & Productivity" },
+            { text: "Don't count the days, make the days count.", category: "Habits & Productivity" },
+            { text: "The best time to plant a tree was 20 years ago. The second best time is now.", category: "Habits & Productivity" },
+            { text: "Time is your most valuable asset—spend it wisely.", category: "Habits & Productivity" },
+            { text: "The Pomodoro Technique boosts focus.", category: "Habits & Productivity" },
+            { text: "Schedule your priorities—don't prioritize your schedule.", category: "Habits & Productivity" },
+            { text: "Time-block your days.", category: "Habits & Productivity" },
+            { text: "Multitasking is a myth—focus on one thing.", category: "Habits & Productivity" },
+            { text: "Delegate or automate repetitive tasks.", category: "Habits & Productivity" },
+
+            // Health & Wellness (20 items)
+            { text: "Take care of your body—it's the only place you have to live.", category: "Health & Wellness" },
+            { text: "Sleep is the best meditation.", category: "Health & Wellness" },
+            { text: "Drink more water.", category: "Health & Wellness" },
+            { text: "Move daily—even a 10-minute walk helps.", category: "Health & Wellness" },
+            { text: "Eat whole foods, mostly plants.", category: "Health & Wellness" },
+            { text: "Sitting is the new smoking.", category: "Health & Wellness" },
+            { text: "Stress is caused by resisting what is.", category: "Health & Wellness" },
+            { text: "Breathe deeply—it calms the nervous system.", category: "Health & Wellness" },
+            { text: "Laugh often—it's free medicine.", category: "Health & Wellness" },
+            { text: "Spend time in nature to recharge.", category: "Health & Wellness" },
+            { text: "You can't pour from an empty cup.", category: "Health & Wellness" },
+            { text: "A smooth sea never made a skilled sailor.", category: "Health & Wellness" },
+            { text: "Happiness is an inside job.", category: "Health & Wellness" },
+            { text: "Journaling clarifies thoughts and emotions.", category: "Health & Wellness" },
+            { text: "Gratitude turns what we have into enough.", category: "Health & Wellness" },
+            { text: "Don't take things personally.", category: "Health & Wellness" },
+            { text: "Let go of what you can't control.", category: "Health & Wellness" },
+            { text: "Meditation is mental hygiene.", category: "Health & Wellness" },
+            { text: "Negative emotions are signals—not truths.", category: "Health & Wellness" },
+            { text: "Self-compassion is key to resilience.", category: "Health & Wellness" },
+
+            // Relationships & Social Life (20 items)
+            { text: "Be kind, for everyone you meet is fighting a hard battle.", category: "Relationships" },
+            { text: "Surround yourself with people who lift you higher.", category: "Relationships" },
+            { text: "Listen more than you speak.", category: "Relationships" },
+            { text: "Assume positive intent in others.", category: "Relationships" },
+            { text: "Don't gossip—it's toxic.", category: "Relationships" },
+            { text: "Say 'no' to things that don't align with your values.", category: "Relationships" },
+            { text: "Forgive, but don't forget.", category: "Relationships" },
+            { text: "Love is a verb—show it through actions.", category: "Relationships" },
+            { text: "The best relationships are built on trust and respect.", category: "Relationships" },
+            { text: "Distance yourself from energy vampires.", category: "Relationships" },
+            { text: "Be kind whenever possible. It is always possible.", category: "Relationships" },
+            { text: "People will forget what you said, people will forget what you did, but people will never forget how you made them feel.", category: "Relationships" },
+            { text: "Never miss a good chance to shut up.", category: "Relationships" },
+            { text: "The less you respond to negative people, the more peaceful your life becomes.", category: "Relationships" },
+            { text: "Be mindful of your tone—it carries more weight than your words.", category: "Relationships" },
+            { text: "Disagree without being disagreeable.", category: "Relationships" },
+            { text: "The right word may be effective, but no word was ever as effective as a rightly timed pause.", category: "Relationships" },
+            { text: "You don't have to attend every argument you're invited to.", category: "Relationships" },
+            { text: "Speak in such a way that others love to listen to you. Listen in such a way that others love to speak to you.", category: "Relationships" },
+            { text: "The most important thing in communication is hearing what isn't said.", category: "Relationships" },
+
+            // Money & Career (20 items)
+            { text: "Spend less than you earn.", category: "Money & Career" },
+            { text: "Invest early—compound interest is the 8th wonder.", category: "Money & Career" },
+            { text: "Diversify your income streams.", category: "Money & Career" },
+            { text: "Negotiate your salary—you're worth it.", category: "Money & Career" },
+            { text: "Learn high-income skills.", category: "Money & Career" },
+            { text: "Don't work for money—make money work for you.", category: "Money & Career" },
+            { text: "Avoid lifestyle inflation.", category: "Money & Career" },
+            { text: "Buy experiences, not things.", category: "Money & Career" },
+            { text: "Financial freedom is a mindset, not just a number.", category: "Money & Career" },
+            { text: "Side hustles can become main hustles.", category: "Money & Career" },
+            { text: "The only place where success comes before work is in the dictionary.", category: "Money & Career" },
+            { text: "Opportunities don't happen. You create them.", category: "Money & Career" },
+            { text: "The difference between who you are and who you want to be is what you do.", category: "Money & Career" },
+            { text: "Success is the sum of small efforts, repeated daily.", category: "Money & Career" },
+            { text: "A leader is one who knows the way, goes the way, and shows the way.", category: "Money & Career" },
+            { text: "Leadership is not about being in charge. It's about taking care of those in your charge.", category: "Money & Career" },
+            { text: "People buy into the leader before they buy into the vision.", category: "Money & Career" },
+            { text: "The best leaders are those most interested in surrounding themselves with assistants smarter than they are.", category: "Money & Career" },
+            { text: "If your actions inspire others to dream more, learn more, do more, and become more, you are a leader.", category: "Money & Career" },
+            { text: "Leadership is the capacity to translate vision into reality.", category: "Money & Career" },
+
+            // Learning & Knowledge (20 items)
+            { text: "Read every day—it's mental compound interest.", category: "Learning" },
+            { text: "Learn something new daily.", category: "Learning" },
+            { text: "Teach what you know—it reinforces learning.", category: "Learning" },
+            { text: "The more you know, the less you fear.", category: "Learning" },
+            { text: "Stay curious—question everything.", category: "Learning" },
+            { text: "Books are the cheapest way to gain wisdom.", category: "Learning" },
+            { text: "Mastery comes from deliberate practice.", category: "Learning" },
+            { text: "Learn from failures—they're tuition for success.", category: "Learning" },
+            { text: "Travel to expand your perspective.", category: "Learning" },
+            { text: "The best investment is in yourself.", category: "Learning" },
+            { text: "The only true wisdom is in knowing you know nothing.", category: "Learning" },
+            { text: "This too shall pass.", category: "Learning" },
+            { text: "Don't believe everything you think.", category: "Learning" },
+            { text: "The unexamined life is not worth living.", category: "Learning" },
+            { text: "The more you know, the more you realize how little you know.", category: "Learning" },
+            { text: "Seek first to understand, then to be understood.", category: "Learning" },
+            { text: "The man who asks a question is a fool for a minute; the man who does not is a fool for life.", category: "Learning" },
+            { text: "Truth is not what you want it to be; it is what it is.", category: "Learning" },
+            { text: "A wise man can learn more from a foolish question than a fool can learn from a wise answer.", category: "Learning" },
+            { text: "The fool speaks, the wise man listens.", category: "Learning" },
+
+            // Resilience & Adversity (20 items)
+            { text: "Smooth seas do not make skillful sailors.", category: "Resilience" },
+            { text: "Fall seven times, stand up eight.", category: "Resilience" },
+            { text: "Pain is inevitable. Suffering is optional.", category: "Resilience" },
+            { text: "Strength does not come from winning. Your struggles develop your strengths.", category: "Resilience" },
+            { text: "The oak fought the wind and was broken; the willow bent when it must and survived.", category: "Resilience" },
+            { text: "Tough times never last, but tough people do.", category: "Resilience" },
+            { text: "Adversity introduces a man to himself.", category: "Resilience" },
+            { text: "When you go through hell, keep going.", category: "Resilience" },
+            { text: "A diamond is just a piece of charcoal that handled stress exceptionally well.", category: "Resilience" },
+            { text: "No pressure, no diamonds.", category: "Resilience" },
+            { text: "Success is walking from failure to failure with no loss of enthusiasm.", category: "Resilience" },
+            { text: "Success is not final, failure is not fatal: It is the courage to continue that counts.", category: "Resilience" },
+            { text: "Dream big, start small, act now.", category: "Resilience" },
+            { text: "The expert in anything was once a beginner.", category: "Resilience" },
+            { text: "Small daily improvements lead to staggering long-term results.", category: "Resilience" },
+            { text: "Don't stop when you're tired. Stop when you're done.", category: "Resilience" },
+            { text: "What you think, you become.", category: "Resilience" },
+            { text: "Life is 10% what happens to you and 90% how you react.", category: "Resilience" },
+            { text: "Do what you can, with what you have, where you are.", category: "Resilience" },
+            { text: "The world is changed by your example, not your opinion.", category: "Resilience" },
+
+            // Minimalism & Simplicity (20 items)
+            { text: "Less is more.", category: "Minimalism" },
+            { text: "Simplicity is the ultimate sophistication.", category: "Minimalism" },
+            { text: "Have nothing in your house that you do not know to be useful or believe to be beautiful.", category: "Minimalism" },
+            { text: "The ability to simplify means to eliminate the unnecessary so that the necessary may speak.", category: "Minimalism" },
+            { text: "Minimalism is not about having less. It's about making room for more of what matters.", category: "Minimalism" },
+            { text: "Buy less, choose well, make it last.", category: "Minimalism" },
+            { text: "Clutter is postponed decisions.", category: "Minimalism" },
+            { text: "The things you own end up owning you.", category: "Minimalism" },
+            { text: "Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away.", category: "Minimalism" },
+            { text: "Live simply so that others may simply live.", category: "Minimalism" },
+            { text: "Constraints breed creativity.", category: "Minimalism" },
+            { text: "Quantity leads to quality.", category: "Minimalism" },
+            { text: "Keep a 'swipe file' of ideas.", category: "Minimalism" },
+            { text: "Don't fear criticism—fear mediocrity.", category: "Minimalism" },
+            { text: "Say 'no' to protect your time.", category: "Minimalism" },
+            { text: "Rest is part of productivity.", category: "Minimalism" },
+            { text: "Your calendar reflects your real priorities.", category: "Minimalism" },
+            { text: "When in doubt, choose kindness.", category: "Minimalism" },
+            { text: "The best apology is changed behavior.", category: "Minimalism" },
+            { text: "Be the person you needed when you were younger.", category: "Minimalism" },
+
+            // Miscellaneous (20 items)
+            { text: "The only way to have a good day is to start it with a good attitude.", category: "Miscellaneous" },
+            { text: "Don't let the noise of others' opinions drown out your own inner voice.", category: "Miscellaneous" },
+            { text: "You can't go back and change the beginning, but you can start where you are and change the ending.", category: "Miscellaneous" },
+            { text: "The only thing standing between you and your goal is the story you keep telling yourself as to why you can't achieve it.", category: "Miscellaneous" },
+            { text: "Life is short. Smile while you still have teeth.", category: "Miscellaneous" },
+            { text: "The meaning of life is to find your gift. The purpose of life is to give it away.", category: "Miscellaneous" },
+            { text: "What you leave behind is not what is engraved in stone monuments, but what is woven into the lives of others.", category: "Miscellaneous" },
+            { text: "Live as if you were to die tomorrow. Learn as if you were to live forever.", category: "Miscellaneous" },
+            { text: "Your life is your message to the world. Make sure it's inspiring.", category: "Miscellaneous" },
+            { text: "The best way to predict the future is to create it.", category: "Miscellaneous" },
+            { text: "Don't just count your years, make your years count.", category: "Miscellaneous" },
+            { text: "To know even one life has breathed easier because you have lived—that is to have succeeded.", category: "Miscellaneous" },
+            { text: "The two most important days in your life are the day you are born and the day you find out why.", category: "Miscellaneous" },
+            { text: "The purpose of human life is to serve and to show compassion and the will to help others.", category: "Miscellaneous" },
+            { text: "You were put on this earth to achieve your greatest self, to live out your purpose, and to do it courageously.", category: "Miscellaneous" },
+            { text: "If you want to be interesting, be interested.", category: "Miscellaneous" },
+            { text: "Be kind whenever possible. It is always possible.", category: "Miscellaneous" },
+            { text: "The only true wisdom is in knowing you know nothing.", category: "Miscellaneous" },
+            { text: "This too shall pass.", category: "Miscellaneous" },
+            { text: "Don't believe everything you think.", category: "Miscellaneous" }
         ];
 
         // ===== STREAK TRACKING SYSTEM ===== //
         const STREAK_KEY = 'ddia_streak';
-        const LAST_VISIT_KEY = 'ddia_last_visit';
         let currentStreak = 0;
         
         function checkStreak() {
@@ -203,7 +394,7 @@
             // Check if last visit was yesterday
             const lastVisitDate = streakData.lastVisit ? new Date(streakData.lastVisit) : null;
             const isConsecutive = lastVisitDate ? 
-                (new Date(lastVisitDate.setDate(lastVisitDate.getDate() + 1)).toDateString() === today : 
+                (new Date(lastVisitDate.setDate(lastVisitDate.getDate() + 1)).toDateString() === today) : 
                 false;
             
             // Update streak
@@ -284,10 +475,6 @@
                 case 'whatsapp':
                     url = `https://wa.me/?text=${encodeURIComponent(text)}`;
                     break;
-                case 'instagram':
-                    navigator.clipboard.writeText(text);
-                    alert("Copied to clipboard! Paste into Instagram Stories");
-                    return;
             }
             
             window.open(url, '_blank', 'width=600,height=400');
