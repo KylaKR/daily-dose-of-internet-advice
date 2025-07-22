@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Dose of Internet Advice</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .advice-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-weight: 300;
+        }
+        .advice-text {
+            font-size: 1.5rem;
+            margin: 30px 0;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.4;
+        }
+        .action-btn {
+            background: #7AE0CC;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        .action-btn:hover {
+            background: #5EC4B0;
+            transform: translateY(-2px);
+        }
+        .category {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .social-dropdown {
+            display: none;
+            position: absolute;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            z-index: 1;
+            margin-top: 5px;
+        }
+        .social-dropdown button {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        .social-dropdown button:hover {
+            background: #f5f5f5;
+        }
+        .share-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        @media (max-width: 600px) {
+            .advice-text {
+                font-size: 1.2rem;
+            }
+            .btn-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="advice-container">
+        <h1>Daily Dose of Internet Advice</h1>
+        <div class="advice-text" id="advice">Loading fresh advice...</div>
+        <div class="category" id="category"></div>
+        <div class="btn-container">
+            <button class="action-btn" id="new-btn">New Advice</button>
+            <button class="action-btn" id="copy-btn">Copy</button>
+            <div class="share-wrapper">
+                <button class="action-btn" id="share-btn">Share ▼</button>
+                <div class="social-dropdown" id="social-dropdown">
+                    <button onclick="shareTo('twitter')">Twitter</button>
+                    <button onclick="shareTo('facebook')">Facebook</button>
+                    <button onclick="shareTo('reddit')">Reddit</button>
+                    <button onclick="shareTo('linkedin')">LinkedIn</button>
+                    <button onclick="shareTo('whatsapp')">WhatsApp</button>
+                </div>
+            </div>
+        </div>
+        <div id="counter" style="margin-top: 15px; font-size: 0.8rem;"></div>
+    </div>
+
+    <script>
+        // ===== ADVICE LIBRARY ===== //
+        const adviceBank = [
+            { text: "🚀 *Not financial advice* but... HODL!", category: "Crypto Memes" },
+            { text: "TFW you realize: 'This is fine.' 🔥🐶", category: "Meme Philosophy" },
+            { text: "Reddit wisdom: 'The real LPT is always in the comments'", category: "Internet Gold" },
+            { text: "PSA: Your 401(k) isn't a mythical creature", category: "Finance Truths" },
+            { text: "TIL the '5-second rule' also applies to regrettable purchases", category: "Life Lessons" },
+            { text: "IRL Loading Screen Tip: Compound interest works while you sleep", category: "Gamer Finance" },
+            { text: "Relationship status: Committed to self-improvement", category: "Growth" },
+            { text: "System Update Available: [Install Adulting 2.0]", category: "Tech Truth" },
+            { text: "Ctrl+Alt+Del toxic relationships", category: "Tech Wisdom" },
+            { text: "404: Fucks not found (About things that don't matter)", category: "Self-Care" }
+        ];
+
+        // ===== SOCIAL SHARING ===== //
+        function shareTo(platform) {
+            const text = `${adviceElement.textContent}\n\n${categoryElement.textContent}`;
+            let url;
+            
+            switch(platform) {
+                case 'twitter':
+                    url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+                    break;
+                case 'facebook':
+                    url = `https://www.facebook.com/sharer/sharer.php?quote=${encodeURIComponent(text)}`;
+                    break;
+                case 'reddit':
+                    url = `https://www.reddit.com/submit?title=${encodeURIComponent(text)}`;
+                    break;
+                case 'linkedin':
+                    url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
+                    break;
+                case 'whatsapp':
+                    url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+                    break;
+            }
+            
+            window.open(url, '_blank', 'width=600,height=400');
+        }
+
+        // ===== APP FUNCTIONALITY ===== //
+        const adviceElement = document.getElementById('advice');
+        const categoryElement = document.getElementById('category');
+        const newBtn = document.getElementById('new-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const shareBtn = document.getElementById('share-btn');
+        const socialDropdown = document.getElementById('social-dropdown');
+        const counterElement = document.getElementById('counter');
+
+        let usedIndices = [];
+        
+        // Toggle dropdown menu
+        shareBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            socialDropdown.style.display = socialDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close dropdown when clicking elsewhere
+        document.addEventListener('click', () => {
+            socialDropdown.style.display = 'none';
+        });
+
+        function getNewAdvice() {
+            if (usedIndices.length >= adviceBank.length) {
+                usedIndices = [];
+                counterElement.textContent = "✨ You've seen all advice! Starting fresh...";
+            }
+            
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * adviceBank.length);
+            } while (usedIndices.includes(randomIndex));
+            
+            usedIndices.push(randomIndex);
+            const item = adviceBank[randomIndex];
+            
+            adviceElement.innerHTML = item.text.replace(/\n/g, '<br>');
+            categoryElement.textContent = `Category: ${item.category}`;
+            counterElement.textContent = `Showing ${usedIndices.length}/${adviceBank.length}`;
+            
+            adviceElement.style.opacity = 0;
+            setTimeout(() => {
+                adviceElement.style.transition = 'opacity 0.5s ease';
+                adviceElement.style.opacity = 1;
+            }, 10);
+        }
+
+        // Button actions
+        newBtn.addEventListener('click', getNewAdvice);
+        
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(`${adviceElement.textContent}\n${categoryElement.textContent}`);
+            copyBtn.textContent = "Copied!";
+            setTimeout(() => copyBtn.textContent = "Copy", 2000);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                getNewAdvice();
+            }
+        });
+        
+        getNewAdvice();
+    </script>
+</body>
+</html>
